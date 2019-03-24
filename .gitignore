@@ -1,0 +1,7 @@
+vendor
+tmp
+tmp/*
+*.out
+*.log
+tiny
+tiny-*
