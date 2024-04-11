@@ -29,22 +29,22 @@ func Optim(conn *grpc.ClientConn, params *OptimParams) (data []byte, err error) 
 	c := pb.NewOptimClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	imgType := pb.ImageType_JPEG
+	imgType := pb.Type_JPEG
 	switch params.Type {
 	case "png":
-		imgType = pb.ImageType_PNG
+		imgType = pb.Type_PNG
 	case "webp":
-		imgType = pb.ImageType_WEBP
+		imgType = pb.Type_WEBP
 	case "jpg":
 		fallthrough
 	case "jpeg":
-		imgType = pb.ImageType_JPEG
+		imgType = pb.Type_JPEG
 	default:
 		err = errors.New("not support " + params.Type + " type")
 		return
 	}
 
-	reply, err := c.ImageOptim(ctx, &pb.ImageOptimRequest{
+	reply, err := c.DoOptim(ctx, &pb.OptimRequest{
 		Source:  imgType,
 		Data:    params.Data,
 		Output:  imgType,
