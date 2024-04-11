@@ -30,7 +30,7 @@ func main() {
 	imageType := flag.String("type", "png,jpg,jpeg", "image ext list")
 	logType := flag.String("log", "error", "log type: error or all")
 
-	server := flag.String("server", "127.0.0.1:7002", "grpc server address")
+	server := flag.String("server", "localhost:6010", "grpc server address")
 	q := flag.String("quality", "80", "quality of image, 0-100")
 
 	flag.Parse()
@@ -112,7 +112,7 @@ func main() {
 			}
 			newFile := targetPath + shortFile
 			os.MkdirAll(filepath.Dir(newFile), os.ModePerm)
-			err = ioutil.WriteFile(targetPath+shortFile, data, 0666)
+			err = os.WriteFile(targetPath+shortFile, data, 0666)
 			if err != nil {
 				fmt.Println("write file fail,", shortFile, err)
 				atomic.AddUint32(&failCount, 1)
